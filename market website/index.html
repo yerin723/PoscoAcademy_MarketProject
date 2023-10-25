@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PODONG market</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <style>
+        @font-face {
+            font-family: 'omyu_pretty';
+            /* 오뮤 다예쁨체 */
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --green-color: #3c6300;
+            --light-green-color: #c0eb7b;
+            --text-color: #1a2428;
+            --bg-color: #fff;
+        }
+
+        body {
+            font-family: 'omyu_pretty';
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: var(--green-color);
+            color: #fff;
+            padding: 40px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .navbar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navbar nav ul li {
+            display: inline;
+            margin-right: 25px;
+        }
+
+        .navbar nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 23px;
+        }
+
+        .login {
+            align-self: flex-end;
+        }
+
+        .login a {
+            font-weight: bold;
+            font-size: 23px;
+            color: #fff;
+            text-decoration: none;
+
+            background-color: none;
+        }
+
+        .login-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .login-form {
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-form h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            color: #fff;
+            background-color: var(--green-color);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .login-popup {
+            display: none;
+        }
+
+        .banner {
+            background-color: #f2f2f2;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .banner h2 {
+            margin-bottom: 20px;
+            font-size: 40px;
+        }
+
+        .products {
+            position: relative;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .products h2 {
+            padding-bottom: 15px;
+            font-size: 30px;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .slider {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* 수정: 4개씩 열로 배치 */
+            gap: 20px;
+            animation: slideAnimation 5s infinite;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            /* 원하는 최대 너비 설정 */
+            margin: 0 auto;
+        }
+
+        .slide {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+            margin: 0 10px;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 이미지가 카드에 꽉 차도록 설정 */
+            border-radius: 10px;
+        }
+
+        .slide .special-deal-card {
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .slide:hover .special-deal-card {
+            opacity: 1;
+        }
+
+        .slide .special-deal-card h1,
+        .slide .special-deal-card p {
+            margin: 0;
+        }
+
+        .slide .special-deal-card h1 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .slide .special-deal-card p {
+            font-size: 14px;
+        }
+
+        .slide .timer-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30px;
+            background-color: #2f80ed;
+            font-size: 14px;
+        }
+
+        .prev,
+        .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 8px;
+            background-color: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        footer {
+            background-color: var(--green-color);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 20px;
+            margin-top: 45px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 20px;
+            line-height: 20px;
+        }
+
+        .product-description {
+            height: 50px;
+        }
+
+        /* vip 고객*/
+        #loginBtn:hover {
+            background-color: none;
+        }
+
+        .recommendation-section {
+            display: none;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .recommendation-section h2 {
+            margin-bottom: 20px;
+            font-size: 30px;
+            color: var(--green-color);
+        }
+
+        .product-list {
+            display: flex;
+            flex-direction: row;
+
+        }
+
+        .product-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .product-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        .product-description {
+            margin-top: 5px;
+            color: #666;
+        }
+
+        .recommendation-section h1 {
+            display: inline-block;
+            position: relative;
+        }
+
+        .recommendation-section h1::before {
+            content: "VIP 회원";
+            position: absolute;
+            top: -15px;
+            left: 0;
+            padding: 2px 8px;
+            background-color: #00bfbf;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .product-list {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .product-card .product-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .product-card .product-title {
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        #recommendation-section-2 h1::before {
+            content: "Silver 회원";
+            position: absolute;
+            top: -15px;
+            left: 0;
+            padding: 2px 8px;
+            background-color: gray;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <h1>PODONG Organic Market</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="login">
+                <a href="#" id="loginBtn">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="products">
+        <h2>포동마켓 오늘의 추천 상품!</h2>
+        <div class="slider owl-carousel" data-items="4"
+            data-responsive='{"0": {"items": 1}, "600": {"items": 2}, "800": {"items": 4}}'>
+            <div class="slide">
+                <img src="image/두부.jpg" alt="Product Image">
+                <div class="product-description">
+                    <h3>두부(1모:420g)</h3>
+                    <p>3680원</p>
+                </div>
+                <div class="special-deal-card">
+                    <p>유전자변형(GMO) 걱정 없는 국산 콩만을 사용합니다.
+                        거품과 기포를 없애는 소포제, 인위적으로 부드럽게 만드는 유화제를 넣지 않습니다.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="image/백미.jpg" alt="Product Image">
+                <div class="product-description">
+                    <h3>백미/유(8kg)-매장용</h3>
+                    <p>36800원</p>
+                </div>
+                <div class="special-deal-card">
+                    <p>제초제나 살충제, 살균제 등 화학농약과 화학비료를 사용하지 않고, 직접 손으로 김을 매거나 오리, 우렁이 등을 이용했습니다.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="image/두유.jpg" alt="Product Image">
+                <div class="product-description">
+                    <h3>검은콩두유(160ml*5봉) </h3>
+                    <p>7100원
+                    </p>
+                </div>
+                <div class="special-deal-card">
+                    <p>국산 서리콩에 찹쌀현미와 흑미를 넣어 영양이 풍부합니다.
+                        설탕을 넣지 않고 프락토올리고당으로 단맛을 내 두유 본래의 고소한 맛과 향을 느끼실 수 있습니다.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="image/휴지.jpg" alt="Product Image">
+                <div class="product-description">
+                    <h3>숲사랑 3겹둥근휴지(18롤) </h3>
+                    <p> 15500원
+                    </p>
+                </div>
+                <div class="special-deal-card">
+                    <p>질기고 먼지가 적은 최고급 펄프로 만든 우유팩을 재활용한 프리미엄 화장지입니다.
+                        우유팩 1kg(1ℓ 우유팩 36개 내외)을 재활용하면 50m 길이 두루마리 화장지 3개를 만들 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="image/유정란.jpg" alt="Product Image">
+                <div class="product-description">
+                    <h3>유정란(10개)</h3>
+                    <p>7050원</p>
+                </div>
+                <div class="special-deal-card">
+                    <p>닭들에게는 항생제, 산란촉진제, 성장호르몬제 등을 넣지 않은 무항생제사료를 먹입니다. - 하절기에는 호밀, 연맥, 수단그라스 등의 직접 기른 청초(갓 베어낸 풀),
+                        동절기에는 풀김치(발효시킨 풀)를 먹입니다.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="image/유기채소액.jpg" alt="Product Image">
+                <div class="product-description">
+                    <h3>채소액(유기/150ml-30봉)</h3>
+                    <p>30000원</p>
+                </div>
+                <div class="special-deal-card">
+                    <p>우리 몸에 필요한 영양분을 풍부하게 함유한 다섯 가지 채소(무, 무청, 우엉, 당근, 표고버섯)를 정성껏 달여서 마시기 좋은 채소액으로 만들었습니다.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="image/참기름.jpg" alt="Product Image">
+                <div class="product-description">
+                    <h3>참기름(330ml) </h3>
+                    <p>37200원 </p>
+                </div>
+                <div class="special-deal-card">
+                    <p>국산 참깨만을 사용합니다.
+                        기름의 맛을 결정하는 요인은 볶는 온도인데, 시중에서는 고온(200℃ 이상)에서 오래 볶아 맛과 향을 인위적으로 높이는 경우가 많은 반면 한살림은
+                        저온(170~180℃)에서 볶아 맛이 깔끔하고 건강합니다.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="image/콩나물.jpg" alt="Product Image">
+                <div class="product-description">
+                    <h3>콩나물(300g)</h3>
+                    <p>1500원
+                    </p>
+                </div>
+                <div class="special-deal-card">
+                    <p>오리알콩, 준저리콩 등 국산 콩으로 정성스럽게 키웠습니다.
+                        성장촉진제, 화학농약, 항생제 등 일체의 화학약품을 사용하지 않았습니다.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+    <section id="recommendation-section-1" class="recommendation-section">
+        <!-- <h2>김포동 고객님을 위한 할인쿠폰이 도착했어요.</h2> -->
+        <!-- Recommendation content goes here -->
+        <h1>김포동님을 위한 추천 유기농제품</h1>
+        <h3>40대 남성들은 주로 이런 상품을 함께 구입했어요.</h3>
+        <div class="product-list">
+            <div class="product-card">
+                <img src="image/깐마늘.jpg" alt="상품 1" class="product-image">
+                <h2 class="product-title">유기농 깐마늘</h2>
+            </div>
+            <div class="product-card">
+                <img src="image/떡.jpg" alt="상품 2" class="product-image">
+                <h2 class="product-title">유기농 떡국떡</h2>
+            </div>
+            <div class="product-card">
+                <img src="image/유기농우유.jpg" alt="상품 3" class="product-image">
+                <h2 class="product-title">이번주 Hit 상품 유기농 우유는 어떠세요?</h2>
+            </div>
+        </div>
+    </section>
+
+    <section id="recommendation-section-2" class="recommendation-section">
+        <h2>자연의수호자님 고객님을 위한 할인쿠폰이 도착했어요.</h2>
+        <!-- Recommendation content goes here -->
+        <h1>Silver 자연의수호자님을 위한 추천 유기농제품</h1>
+        <h3>오랜만에 방문으로 깜짝 할인쿠폰을 제공해드립니다!</h3>
+        <div class="product-list">
+            <div class="product-card">
+                <img src="image/유정란.jpg" alt="상품 1" class="product-image">
+                <h2 class="product-title">유기농 유정란</h2>
+            </div>
+            <div class="product-card">
+                <img src="image/백미밥.jpg" alt="상품 2" class="product-image">
+                <h2 class="product-title">유기농 떡국떡</h2>
+            </div>
+            <div class="product-card">
+                <img src="image/쿠폰.png" alt="상품 3" class="product-image">
+                <h2 class="product-title">오랜만에 방문한 고객님을 위한 20% 할인쿠폰</h2>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 친환경 마켓의 선두주자 포동마켓</p>
+    </footer>
+
+    <div id="loginPopup" class="login-popup">
+        <div class="login-form">
+            <h2>포동마켓 로그인</h2>
+            <form>
+                <input type="text" placeholder="회원번호(123 또는 456 입력)">
+                <input type="password" placeholder="Password(123 또는 456 입력)">
+                <button type="submit">Login</button>
+            </form>
+            <span class="close-btn">&times;</span>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script>
+        const loginBtn = document.getElementById("loginBtn");
+        const loginPopup = document.getElementById("loginPopup");
+        const closeBtn = document.querySelector(".close-btn");
+        const loginForm = document.querySelector(".login-form");
+        const recommendationSection = document.getElementById("recommendation-section");
+
+        loginBtn.addEventListener("click", showLoginForm);
+        closeBtn.addEventListener("click", hideLoginForm);
+        loginForm.addEventListener("submit", handleLogin);
+
+        function showLoginForm(event) {
+            event.preventDefault();
+            loginPopup.style.display = "flex";
+        }
+
+        function hideLoginForm() {
+            loginPopup.style.display = "none";
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.querySelector('input[type="text"]').value;
+            const password = document.querySelector('input[type="password"]').value;
+            const loginPopup = document.getElementById("loginPopup");
+            const recommendationSection1 = document.getElementById("recommendation-section-1");
+            const recommendationSection2 = document.getElementById("recommendation-section-2");
+
+            if (username === "123" && password === "123") {
+                alert("환영합니다 VIP 김포동고객님!");
+                loginPopup.style.display = "none";
+                showRecommendation("김포동", "40대 남성은 주로 이런제품을 많이 사고 있어요!", "유기농 깐마늘", "유기농 떡국떡", "image/유기농우유.jpg", "이번주 Hit 상품 유기농 우유는 어떠세요?", recommendationSection1);
+                recommendationSection2.style.display = "none"; // recommendationSection2를 숨김
+            } else if (username === "456" && password === "456") { 
+                alert("오랜만에 방문하셨네요 Silver 자연의수호자님!");
+                loginPopup.style.display = "none";
+                showRecommendation("자연의수호자", "50대 여성은 주로 이런제품을 많이 사고 있어요!", "유기농 유정란", "유기농 백미밥", "image/쿠폰.png", "오랜만에 방문하신 고객님을 위한 20% 할인쿠폰", recommendationSection2);
+                recommendationSection1.style.display = "none"; // recommendationSection1을 숨김
+            } else {
+                alert("포동마켓 회원이 아닙니다! 회원가입을 해주세요!");
+                loginPopup.style.display = "none";
+                recommendationSection1.style.display = "none";
+                recommendationSection2.style.display = "none";
+            }
+        }
+
+        function showRecommendation(greeting, message, product1, product2, image3, product3, recommendationSection) {
+            recommendationSection.style.display = "block";
+            recommendationSection.innerHTML = `
+                <h1>${greeting}님을 위한 추천 유기농제품</h1>
+        
+                <h2>${greeting}님 ${message}</h2>
+                <div class="product-list">
+                    <div class="product-card">
+                        <img src="image/깐마늘.jpg" alt="상품 1" class="product-image">
+                        <h2 class="product-title">${product1}</h2>
+                    </div>
+                    <div class="product-card">
+                        <img src="image/떡.jpg" alt="상품 2" class="product-image">
+                        <h2 class="product-title">${product2}</h2>
+                    </div>
+                    <div class="product-card">
+                        <img src="${image3}" alt="상품 3" class="product-image">
+                        <h2 class="product-title">${product3}</h2>
+                    </div>
+                </div>`;
+        }
+
+
+        // Slider initialization
+        $('.slider').owlCarousel({
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                800: {
+                    items: 4
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
