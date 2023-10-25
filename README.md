@@ -9,11 +9,10 @@
 
 ## 역할
 
-1. Market Data 프로젝트 총괄 및 데이터 정제 (data - member, product A~D)
-2. RFM분석을 통한 고객별 membership 재정립
-3. 가설 설계 및 통계 모델을 활용한 가설 검정
-4. PodongMarket 웹사이트 구현
-    - 웹사이트 링크: [PodongMarket Webpage](https://yerin723.github.io/MarketWebpage/)
+- Market Data 프로젝트 총괄 및 데이터 정제 (data - member, product A~D)
+- RFM분석을 통한 고객별 membership 재정립
+- 가설 설계 및 통계 모델을 활용한 가설 검정
+- PodongMarket 웹사이트 구현 [PodongMarket Webpage](https://yerin723.github.io/MarketWebpage/)
 
 ## PodongMarket 웹사이트 주요 기능🔎
 
